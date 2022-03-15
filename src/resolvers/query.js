@@ -1,11 +1,12 @@
 module.exports = {
 	notes: async (parent, args, { models }) => {
-		//return await models.Note.find().limit(100);
-        return await models.Note.find();
+		// 최대 100건으로 데이터 제한 
+		return await models.Note.find().limit(100);
 	},
 	note: async (parent, args, { models }) => {
 		return await models.Note.findById(args.id);
 	},
+	
 	user: async (parent, { username }, { models }) => {
 		// 주어진 username 과 일치하는 사용자 찾기
 		return await models.User.findOne({ username });

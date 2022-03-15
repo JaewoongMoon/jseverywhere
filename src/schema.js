@@ -2,16 +2,22 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
-	scalar DateTime
+    scalar DateTime
 	type Note {
 		id: ID!
 		content: String!
-		author: String!
+		author: User!
         createdAt: DateTime!
         updatedAt: DateTime!
         favoriteCount: Int!
         favoritedBy: [User!]
 	}
+
+    type NoteFeed {
+        notes: [Note]!
+        cursor: String!
+        hasNextPage: Boolean!
+    }
 
     type User {
         id: ID!
@@ -22,28 +28,21 @@ module.exports = gql`
         favorites: [Note!]!
     }
 
-	type Query {
-		hello: String!
+    type Query {
 		notes: [Note!]!
 		note(id: ID!): Note!
+        noteFeed(cursor: String): NoteFeed
         user(username: String!): User
         users: [User!]!
         me: User!
-        noteFeed(cursor: String): NoteFeed
 	}
 
 	type Mutation {
 		newNote(content: String!): Note!
-		updateNote(id: ID!, content: String!): Note!
+        updateNote(id: ID!, content: String!): Note!
 		deleteNote(id: ID!): Boolean!
         signUp(username: String!, email: String!, password: String!): String!
         signIn(username: String, email: String, password: String!): String!
         toggleFavorite(id: ID!): Note!
 	}
-
-    type NoteFeed {
-        notes: [Note]!
-        cursor: String!
-        hasNextPage: Boolean!
-    }
 `;

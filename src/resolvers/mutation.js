@@ -26,6 +26,7 @@ module.exports = {
 		});
 	},
 	deleteNote: async (parent, { id }, { models, user }) => {
+
 		if (!user) {
 			throw new AuthenticationError(
 				'You must be signed in to delete a note'
