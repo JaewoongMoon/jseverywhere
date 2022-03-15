@@ -52,7 +52,7 @@ const server = new ApolloServer({
 		// context에 db models 및 user 추가
 		return { models, user };
 	},
-	introspection: false // 인트로스펙션 무효화(false)
+	introspection: true // 인트로스펙션 무효화(false)
 });
 // 아폴로 그래프QL 미들웨어를 적용하고 경로를 /api로 설정
 server.applyMiddleware({app, path: '/api'});
